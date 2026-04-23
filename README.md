@@ -6,11 +6,11 @@ Your task: make `GET /api/v1/dishes` so the frontend can get the list of dishes 
 
 Open the file:
 
-[backend/src/models/db/schemas/02_tables.sql](/Users/ksenia/Desktop/mursu-sushi-restaurant/backend/src/models/db/schemas/02_tables.sql:56)
+`backend/src/models/db/schemas/02_tables.sql`
 
 Find the `dishes` table.
 
-Look at which fields it has (spoiler):
+Look at which fields it has. Spoiler:
 - `id`
 - `name`
 - `description`
@@ -20,11 +20,11 @@ Look at which fields it has (spoiler):
 
 Then open the file:
 
-[backend/src/models/db/schemas/04_dummy_data.sql]
+`backend/src/models/db/schemas/04_dummy_data.sql`
 
 Look at which dishes are already in the database in the `dishes` table.
 
-## 2. Now create a function to get this data
+## 2. Now create a function to get this data from the database
 
 Go to the folder:
 
@@ -38,11 +38,11 @@ Inside the `dish` folder create a file:
 
 `dish.repository.js`
 
-In this file you need to write and export a function that goes to our database, takes all dishes from the `dishes` table, and returns them to us. (You need to export this function so it can be used later in the controller. A controller is a file that receives a request from the frontend and sends data back in the response. We will come back to controllers later.)
+In this file you need to write and export a function that goes to our database, takes all dishes from the `dishes` table, and returns them to us. (You need to export this function so it can be used later in the controller. A controller is a file that receives a request from the frontend and sends data back in the response. It's not essential now, we will come back to controllers later.)
 
 How do you write your function?
 
-1. import `select`
+1. import `select` function
 
 ```js
 import { select } from '../../db.js';
@@ -50,7 +50,7 @@ import { select } from '../../db.js';
 
 `select` is a ready-made function for reading data from our database. It takes two arguments: an SQL query string and optional extra dynamic parameters. You do not need the parameters yet.
 
-`select` is here (you do not need to look): [backend/src/models/db/db.js]. In this file Laura created the connection to our database once, set everything up there (I did not even look myself), and exported the `select` function for us, which we can now use anywhere to get data from our database.
+`select` is here (you do not need to look): `backend/src/models/db/db.js`. In this file Laura created the connection to our database once, set everything up there (I did not even look myself), and exported the `select` function for us, which we can now use anywhere to get data from our database.
 
 (EXTRA NOTE: This file actually only has two functions: `select` and `execute`. We use `select` when we just want to read data from the database, and we use `execute` when we want to update existing data or add new data. Right now you only need `select`.)
 
@@ -173,7 +173,7 @@ When the frontend wants to get the menu, it sends a fetch request to:
 /api/v1/dishes
 ```
 
-This request comes to our backend and goes into the routes file [backend/src/routes.js]. Open it.
+This request comes to our backend and goes into the routes file `backend/src/routes.js`. Open it.
 
 This is a pretty scary file. Laura created it. There is a line there:
 
@@ -192,7 +192,7 @@ For you this means that in `dish.controller.js` you need to create this `list` f
 
 1. Open the file:
 
-[backend/src/controllers/dish.controller.js]
+`backend/src/controllers/dish.controller.js`
 
 This is also a pretty scary file. Laura created this one in advance too. Right now this file has temporary placeholders instead of real functions.
 
@@ -345,8 +345,8 @@ Instructions:
 
 1. Open:
 
-- [backend/src/models/db/schemas/02_tables.sql]
-- [backend/src/models/db/schemas/04_dummy_data.sql]
+- `backend/src/models/db/schemas/02_tables.sql`
+- `backend/src/models/db/schemas/04_dummy_data.sql`
 
 2. Look at the tables:
 
@@ -355,7 +355,7 @@ Instructions:
 
 3. Open:
 
-- [backend/src/routes.js](/Users/ksenia/Desktop/mursu-sushi-restaurant/backend/src/routes.js:27)
+- `backend/src/routes.js`
 
 4. Find the route:
 
@@ -408,7 +408,7 @@ LIMIT 1
 
 13. Open:
 
-- [backend/src/controllers/dish.controller.js](/Users/ksenia/Desktop/mursu-sushi-restaurant/backend/src/controllers/dish.controller.js:1)
+- `backend/src/controllers/dish.controller.js`
 
 14. Find the line:
 
