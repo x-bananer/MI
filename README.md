@@ -60,8 +60,6 @@ Let's try using `select` by creating the `getDishes` function.
 
 - Right below your import, create an exported async function `getDishes`.
 
-*NOTE: working with a database is an asynchronous operation, so your function must be async, and before select you need to use await.*
-
 ```js
 export async function getDishes() {
   // ...
@@ -69,6 +67,8 @@ export async function getDishes() {
 ```
 
 - Inside the `getDishes` function call `select()` and pass it an SQL query that selects the fields id, name, description, price, is_available, created_at from the `dishes` table.
+
+*NOTE: working with a database is an asynchronous operation, so your function must be async, and before select you need to use await.*
 
 ```js
 select(`
