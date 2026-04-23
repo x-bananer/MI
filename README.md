@@ -48,13 +48,13 @@ How do you write your function?
 import { select } from '../../db.js';
 ```
 
-`select` is a ready-made function for reading data from our database. It takes two arguments: an SQL query string and optional extra dynamic parameters. You do not need the parameters yet.
+`select` is a ready-made by Luara function for reading data from our database. It takes two arguments: an SQL query string and optional extra dynamic parameters. You do not need the parameters yet.
 
-`select` is here (you do not need to look): `backend/src/models/db/db.js`. In this file Laura created the connection to our database once, set everything up there (I did not even look myself), and exported the `select` function for us, which we can now use anywhere to get data from our database.
+You can find the code of the `select` is here: `backend/src/models/db/db.js` (you do not need to look). In this file Laura created the connection to our database once, set everything up there (I did not even look myself), and exported the `select` function for us, which we can now use anywhere to get data from our database.
 
-(EXTRA NOTE: This file actually only has two functions: `select` and `execute`. We use `select` when we just want to read data from the database, and we use `execute` when we want to update existing data or add new data. Right now you only need `select`.)
+*(NOT)FUN FACT: This file actually has two functions: `select` and `execute`. We use `select` when we just want to read data from the database, and we use `execute` when we want to update existing data or add new data. Right now you only need `select`.*
 
-2. use `select`
+2. use `select` function
 
 Let's try using `select` by creating the `getDishes` function.
 
