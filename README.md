@@ -470,6 +470,7 @@ Example:
     {
       "id": 1,
       "name": "Sake Sashimi",
+      // ... other dish fields
       "badges": [
         { "id": 1, "name": "Vegan" },
         { "id": 2, "name": "Gluten-Free" }
@@ -586,6 +587,7 @@ But the frontend needs this:
   {
     id: 1,
     name: 'Sake Sashimi',
+    // ... other dish fields
     badges: [
       { id: 6, name: 'Popular' },
       { id: 3, name: 'Gluten-Free' }
