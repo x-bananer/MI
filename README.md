@@ -446,3 +446,179 @@ http://localhost:3000/api/v1/dishes/daily-special
 20. Check that the response has the field:
 
 - `dish`
+
+## Independent assignment 2: add badges to dishes
+
+Now let’s come back to the very first thing you built: the list of dishes.
+
+Right now it works, but each dish is still missing one field:
+
+- `badges` (gluten-free, lactose-free, vegan etc.)
+
+We are going to change it. What we want in the end:
+
+- all dishes should still be returned
+- each dish should have a `badges` field
+- `badges` should be an array
+- inside that array there should be badge objects that belong to this dish
+
+Example:
+
+```json
+{
+  "dishes": [
+    {
+      "id": 1,
+      "name": "Sake Sashimi",
+      "badges": [
+        { "id": 1, "name": "Vegan" },
+        { "id": 2, "name": "Gluten-Free" }
+      ]
+    }
+  ]
+}
+```
+
+### 1. First look at the database
+
+You already know the `dishes` table from the first task. Now you need to check out two mote tables:
+
+- In `badge`, look at which badges already exist in the database.
+- In `dish_badges`, look at which badges are connected to which dishes.
+
+What is important:
+
+- `badge` contains the badges themselves
+- `dish_badges` connects dishes and badges by their ids
+
+So for this task you need to combine `dish_badges` and `badge`.
+
+### 2. Change the SQL query in `dish.repository.js`
+
+Open your repository file `dish.repository.js`.
+
+Right now you already have a simple query that gets all dishes.
+
+Replace that query with this one:
+
+```sql
+SELECT
+  dishes.id,
+  dishes.name,
+  dishes.description,
+  dishes.price,
+  dishes.is_available,
+  dishes.created_at,
+  badge.id AS badge_id,
+  badge.name AS badge_name
+FROM dishes
+LEFT JOIN dish_badges
+  ON dish_badges.dish_id = dishes.id
+LEFT JOIN badge
+  ON badge.id = dish_badges.badge_id
+```
+
+What this does:
+
+- you still get all dishes
+- now each row may also contain `badge_id` and `badge_name`
+- the same dish can appear more than once if it has more than one badge
+
+That is normal.
+
+At this step the data is still not in the final shape for the frontend.
+
+*(NOT)FUN FACT: you can write SQL queries on your own, I just use AI to write them, because I still haven’t fully learned SQL, but I think that's okay!*
+
+### 3. Change the service
+
+Open your service file `dish.service.js`.
+
+Right now the service just returns the rows as they come from the repository. That is not enough anymore.
+
+Now the service has to become useful and to:
+
+1. take all rows from the repository as it does now
+2. group rows by dish id
+3. create one dish object per dish
+4. create a `badges` array inside each dish
+5. push badge objects into that array
+6. return the final array of ready-to-go-to-frontend dishes
+
+### 4. What shape should the service build
+
+For each dish, the service should build an object like this:
+
+```js
+{
+  id,
+  name,
+  description,
+  price,
+  is_available,
+  created_at,
+  badges: [
+    {id: 1, name: 'Vegan'},
+    {id: 2, name: 'Lactose-free'}
+  ]
+}
+```
+
+The badges array can also be empty if the dish has no badges in the database.
+
+### 5. Why this new service function is needed
+
+After the SQL query with `LEFT JOIN`, the database returns so called "flat rows". That means one dish can be repeated several times.
+
+Example:
+
+```js
+[
+  { id: 1, name: 'Sake Sashimi', badge_id: 6, badge_name: 'Vegan' },
+  { id: 1, name: 'Sake Sashimi', badge_id: 3, badge_name: 'Gluten-Free' }
+]
+```
+
+But the frontend needs this:
+
+```js
+[
+  {
+    id: 1,
+    name: 'Sake Sashimi',
+    badges: [
+      { id: 6, name: 'Popular' },
+      { id: 3, name: 'Gluten-Free' }
+    ]
+  }
+]
+```
+
+So the service has to collect repeated rows back into one dish.
+
+### 6. Controller
+
+You do not need to change anything in the controller.
+
+### 7. Test
+
+Run:
+
+```bash
+cd backend
+npm run dev
+```
+
+Open in the browser:
+
+```http
+http://localhost:3000/api/v1/dishes
+```
+
+Check that:
+
+- all dishes are still there
+- each dish has a `badges` field
+- `badges` is an array
+- inside `badges` there are badge objects with `id` and `name`
+
