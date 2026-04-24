@@ -482,7 +482,7 @@ Example:
 
 ### 1. First look at the database
 
-You already know the `dishes` table from the first task. Now you need to check out two mote tables:
+You already know the `dishes` table from the first task. Now you need to check out two more tables:
 
 - In `badge`, look at which badges already exist in the database.
 - In `dish_badges`, look at which badges are connected to which dishes.
