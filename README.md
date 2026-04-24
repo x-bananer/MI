@@ -484,7 +484,7 @@ Example:
 
 You already know the `dishes` table from the first task. Now you need to check out two more tables:
 
-- In `badges` table, look at which badges already exist in the database.
+- In `badge` table, look at which badges already exist in the database.
 - In `dish_badges` table, look at which badges are connected to which dishes.
 
 What is important:
